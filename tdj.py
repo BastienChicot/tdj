@@ -9,20 +9,26 @@ import random
 import numpy as np
 import pandas as pd
 
+dilemme = pd.DataFrame(index = ["denoncer","ne rien dire"], data={"denoncer":[(-3,-3),(-10,0)],"ne rien dire":[(0,-10),(-1,-1)]})
+
 ##DILEMME DU PRISONNIER
 
 class jeu():
-    def __init__(self,nb_joueur,liste_choix):
-        self.matrice = pd.DataFrame(index=[liste_choix][0],columns=[liste_choix])
+    def __init__(self,nb_joueur,liste_choix = None, matrice = None) :
         
+        if matrice is None:
+            self.matrice = pd.DataFrame(index=[liste_choix][0],columns=[liste_choix])
+            self.nb_choix = int(len(liste_choix)) 
+            self.liste_choix = liste_choix
+        else:
+            self.matrice = matrice
+            self.nb_choix = int(len(matrice.columns))
+            self.liste_choix = list(matrice.columns)            
+ 
         self.nb_joueur = nb_joueur
         
         self.liste_gain = []
-        
-        self.liste_choix = liste_choix
-        
-        self.nb_choix = int(len(liste_choix))        
-        
+               
         self.optimum  = []
         
         self.df_nash = []
@@ -33,38 +39,41 @@ class jeu():
         #     except:
         #         pass
 
-    def matrice_gain(self,liste_outcome):
-        longueur = int(len(liste_outcome))
-        for i in range(0,len(liste_outcome)):
-            for i in range(0,self.nb_choix):
-                gain = [liste_outcome[i],liste_outcome[i]]
-                self.liste_gain.append(gain)
-
-            rest = liste_outcome[self.nb_choix:longueur]
-            output=[rest[j:j + self.nb_joueur] for j in range(0, len(rest), self.nb_joueur)]
-            for elt in output:
-                combi = list(set(permutations(elt,self.nb_joueur)))
-                for elt in combi:
-                    self.liste_gain.append(list(elt))
-                
-            self.liste_gain = self.liste_gain[0:len(liste_outcome)]
-
-            return(self.liste_gain)
+    def show_matrice(self, liste_outcome = None):
         
-    def show_matrice(self):
-        for i in range(len(self.liste_gain)):
-            for j in range(len(self.matrice.columns)):
-                print(i,j,self.liste_gain[i])
-                if i == j and i < len(self.liste_choix):
-                    self.matrice.iloc[j][self.matrice.columns[j]] = self.liste_gain[i]
-                elif  len(self.liste_gain)-1 > i >= len(self.liste_choix) and i != j:
-                    for k in range(len(self.matrice.index)):
-                        if k != j :
-                            self.matrice.iloc[k][self.matrice.columns[j]] = self.liste_gain[i]
-                            self.matrice.iloc[j][self.matrice.columns[k]] = self.liste_gain[i+1]
-
+        if liste_outcome is not None :
+        
+            longueur = int(len(liste_outcome))
+            for i in range(0,len(liste_outcome)):
+                for i in range(0,self.nb_choix):
+                    gain = [liste_outcome[i],liste_outcome[i]]
+                    self.liste_gain.append(gain)
+    
+                rest = liste_outcome[self.nb_choix:longueur]
+                output=[rest[j:j + self.nb_joueur] for j in range(0, len(rest), self.nb_joueur)]
+                for elt in output:
+                    combi = list(set(permutations(elt,self.nb_joueur)))
+                    for elt in combi:
+                        self.liste_gain.append(list(elt))
                     
-        return(self.matrice)
+                self.liste_gain = self.liste_gain[0:len(liste_outcome)]
+    
+                for i in range(len(self.liste_gain)):
+                    for j in range(len(self.matrice.columns)):
+                        print(i,j,self.liste_gain[i])
+                        if i == j and i < len(self.liste_choix):
+                            self.matrice.iloc[j][self.matrice.columns[j]] = self.liste_gain[i]
+                        elif  len(self.liste_gain)-1 > i >= len(self.liste_choix) and i != j:
+                            for k in range(len(self.matrice.index)):
+                                if k != j :
+                                    self.matrice.iloc[k][self.matrice.columns[j]] = self.liste_gain[i]
+                                    self.matrice.iloc[j][self.matrice.columns[k]] = self.liste_gain[i+1]
+                                
+            return(self.matrice)
+        
+
+        else :
+            return(self.matrice)
         
     def pareto(self):
         if self.matrice.isnull().any().any():
@@ -124,27 +133,13 @@ class jeu():
         return(self.df_nash,message,self.eqs)
 
             
-test = jeu(2,["denoncer","rien dire"])                
+test = jeu(2,matrice = dilemme)                
 
 liste_choix = [-3,-1,0,-10]
 
-a = test.matrice_gain(liste_choix)
+test.show_matrice(liste_outcome = liste_choix)
 
 test.nash()
-b = test.show_matrice()
+test.show_matrice()
 test.pareto()
 test.matrice
-test_df = b.copy()
-
-for i in range(len(test_df.index)):
-    for j in test_df.columns:
-        test_df[j][i] = test_df[j][i][0]#.astype(str).astype(int)
-        print(type(test_df[j][i]))
-    x = max(test_df.iloc[i])
-
-for j in test_df.columns:
-    test_df[j] = test_df[j].astype(int)
-liste_nash = pd.DataFrame(test_df.idxmax(axis=1)).reset_index()
-eq = liste_nash.groupby(0).nunique()
-
-len(eq)
