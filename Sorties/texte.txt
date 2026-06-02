@@ -1,0 +1,106 @@
+**📄 Titre de l'article :** Economics and identity **Auteurs : Akerloft, Kranton**
+**📅 Année : 2000**
+**1. La "Punchline" (en 2 phrases) :**
+Comment l’identité d’une personne affecte ces choix 
+**2. Le lien avec mon article (Réactance/Nudges) :**
+*Pourquoi cet article justifie mon modèle ?* 
+L’article est lié à mon sujet car il présente un modèle d’utilité basé sur l’identité des agents. En fonction de leur propre image, de ce à quoi ils veulent correspondre, leurs décisions peuvent être altérées. Ceci illustre bien la part de la population réfractaires à une politique publique qui le font non pas de manière rationnelle mais de telle sorte qu’ils correspondent à une identité précise
+**3. Citations clés (à copier-coller plus tard) :**
+*Repère 1 ou 2 phrases fortes dans la conclusion.*
+
+“Many standard psychological and sociological concepts—self-image, ideal type, in-group and out-group, social category, identification, anxiety, self-destruction, self-realization, situation—fit naturally in our framework, allowing an expanded analysis of economic outcomes.”
+
+“A person’s sense of self is associated with different social categories and how people in these
+categories should behave”
+
+**4. Variables/Concepts exploitables :**
+La fonction d’utilité et les biais psychologiques d’appartenance qui impactent les décisions des agents
+
+**📄 Titre de l'article :** Incentive and prosocial behavior **Auteurs : Bénabou, Tirole**
+**📅 Année : 2005**
+**1. La "Punchline" (en 2 phrases) :**
+L’article développe un modèle qui prends en considération l’image qu’un agent a de lui même lorsqu’il prends une décision. Il intègre aussi ma notion de récompenses (qu’elles soient physiques ou sociales)
+**2. Le lien avec mon article (Réactance/Nudges) :**
+*Pourquoi cet article justifie mon modèle ?* 
+L’article montre que si une part de la population ne prends pas la même décision qu’une autre, cela peut s’expliquer par leur motivation et leur propension à l’altruisme. On y intègre la notion d’incentive pour essayer de diriger les agents. Le modèle montre aussi l’impact d’une récompense.
+**3. Citations clés (à copier-coller plus tard) :**
+*Repère 1 ou 2 phrases fortes dans la conclusion.*
+
+“People’s actions indeed reflect a variable mix of altruistic motivation, material self-interest and social or self image concerns”
+
+"Crucially, altering any of the three components of motivation—for instance through extrinsic incentives or greater publicity given to actions—changes the meaning attached to prosocial (or antisocial) behavior and feeds back onto the reputational incentive to engage in it."
+
+**4. Variables/Concepts exploitables :**
+La fonction de réputation et les notions de motivations prosociales et d’incentives (récompenses) dans le mix de décision des agents. 
+
+**📄 Titre de l'article :** Psychological reactance theory : An introduction and overview **Auteurs : Rosenberg, Siegel**
+**📅 Année : 2025**
+**1. La "Punchline" (en 2 phrases) :**
+C’est simplement un article qui retrace la littérature du concept de Réactance créé par Brehm.
+**2. Le lien avec mon article (Réactance/Nudges) :**
+*Pourquoi cet article justifie mon modèle ?* 
+Dans cet article j’ai un état de l’art sur le sujet de la reactance et j’ai des sources si je souhaite approfondir le sujet ou m’intéresser à différentes approches/tests qui ont été réalisés sur cet thème
+**3. Citations clés (à copier-coller plus tard) :**
+*Repère 1 ou 2 phrases fortes dans la conclusion.*
+
+To ensure broad representation of current scholarship in the field, we intentionally invited contributions from scholars representing Wave 2: Clinical Psychology, Wave 3: Communication, Wave 4: Measurement, and Wave 5: Motivation. These researchers come from various backgrounds (e.g., social psychologists, clinical psychologists, communication scholars) and career stages.
+
+**4. Variables/Concepts exploitables :**
+La théorie de la réactance psychologique et les expériences menées sur ce sujet
+
+**📄 Titre de l'article :** The hidden costs of control **Auteurs : Falk, Kosfeld**
+**📅 Année : 2025**
+**1. La "Punchline" (en 2 phrases) :**
+Il s’agit d’une expérimentation menée sur l’impact du contrôle dans la productivité des agents avec plusieurs types de groupes pour voir comment se déroulent les actions avec et sans contrôle (et avec des contrôles de différentes formes)
+**2. Le lien avec mon article (Réactance/Nudges) :**
+*Pourquoi cet article justifie mon modèle ?* 
+Ce qu’il ressort de cet article c’est que le contrôle à un coût et que, si le contrôle peut augmenter la productivité de certaines personnes, il a majoritairement un impact négatif. Cela est parfait pour illustrer la relation des agents avec une politique publique un peu trop insistante. Cela vient justifier qu’il existe bien un coût pour une frange de la population à suivre une recommandation et que, plus on tend à vouloir les pousser à faire quelque chose, plus il se démotivent à faire la dite chose. Toutefois, cet article se base sur des relations autour d’une activité productive type entreprise. Mais l’idée qu’un coût du contrôle impact les décisions des agents rejoint aussi celle des agents qui ne veulent pas suivre une recommandation parce que cela entacherait leur image ou leur donnerait l’impression de ne pas être autonome (un coût différent mais bien réel).
+**3. Citations clés (à copier-coller plus tard) :**
+*Repère 1 ou 2 phrases fortes dans la conclusion.*
+
+“Our paper's main message is that control and explicit incentives carry hidden costs that must be taken seriously.”
+
+"Agents performed much better in the EX10 treatment, where control was imposed externally, compared to scenarios where the principal made the controlling decision. This finding highlights the important role of third parties—such as consultancies and governments—in implementing control and explicit incentives."
+
+**4. Variables/Concepts exploitables :**
+Le coût du contrôle et la perte de motivation ou l’augmentation des réponses négatives lorsque l’on incite trop un groupe à faire quelque chose, que ce soit de l’ordre de la productivité en entreprise ou que l’on projette ça dans la vie de tout les jours via des politiques publiques.
+
+**📄 Titre de l'article :** The iframe and the sframe **Auteurs : Chater, Lowenstein**
+**📅 Année : 2023**
+**1. La "Punchline" (en 2 phrases) :**
+
+Les études comportementales ont trop souvent donné la priorité aux politiques publiques qui visaient les personnes individuellement alors qu’elles auraient du se tourner vers une approche plus systémique 
+**2. Le lien avec mon article (Réactance/Nudges) :**
+*Pourquoi cet article justifie mon modèle ?* 
+
+L’article justifie le modèle car il montre que les politiques publiques issues des études comportementales (notamment les Nudges) n’ont eues qu’un impact très léger. Le problème selon eux, viendrait du fait que ces incentives sont orientés sur les personnes et non sur le système. L’idée serait donc de créer des politiques publiques qui font comprendre aux gens l’intérêt de leurs actions et leur font prendre conscience du problème que les politiques publiques cherchent à résoudre. L’approche personnelle revêtant un aspect trop punitif ou trop éloigné parfois de la réalité des gens qui ne prennent pas conscience de la grandeur d’un problème lorsqu’on leur demande simplement de réduire une consommation ou de changer un comportement.
+**3. Citations clés (à copier-coller plus tard) :**
+*Repère 1 ou 2 phrases fortes dans la conclusion.*
+
+"We argue that our field has focused too much on policy interventions targeting individual behavior. We show that (1) many critical public policy challenges stem from problematic systemic policies defended by the commercial interests they benefit; (2) these commercial interests promote i-frame solutions while lobbying against s-frame reform; (3) many behaviorally-oriented academics, including ourselves, have inadvertently reinforced the ineffective i-frame perspective; and (4) i-frame interventions yield disappointing results and, more importantly, can reduce support for effective s-frame policies."
+
+"Giesler and Verusiu (2014:841) coin the term "responsibilization" to describe processes "through which responsibility is shifted away from the state and corporations" and toward the "responsible consumer."
+
+**4. Variables/Concepts exploitables :**
+Le concept de cet article repose sur le cadre d’application des politiques publiques. Celui-ci ne date que de 2023 et est dont tout à fait d’actualité. Il remet en cause les politiques publiques comme les Nudges et, à travers différents exemples, pointe les approches qui ont été préférées par des scientifiques mais qui n’ont pas toujours eu l’impact voulu. Dans mon travail, je peux réutiliser ces arguments pour montrer que la réactance d’une frange de la population est validée par plusieurs théories et que cela peut être potentiellement diminué avec une approche moins individuelle et plus systèmique.
+
+**📄 Titre de l'article :** The limitation of defaults **Auteurs : Beshears, Choi, Laibson, Madrian**
+**📅 Année : 2010**
+**1. La "Punchline" (en 2 phrases) :**
+
+Les options par défauts ont montré leur pertinence mais il existe une limite à celle-ci que les auteurs ont tentés de déterminer. 
+
+**2. Le lien avec mon article (Réactance/Nudges) :**
+*Pourquoi cet article justifie mon modèle ?* 
+
+Sans pour autant parler de politiques publiques, cet article a un intérêt pour mon travail et notamment sur les options par défaut qui peuvent être adaptées mais parfois contre productives lorsqu’elles sont trop extrêmes. Dans cet article, ils font des tests sur l’épargne pour des salariés américains qui est sujette à une option par défaut dans les entreprises suite à la mise en place d’un Nudge. Lorsque le taux devient trop élevé ou bien est trop élevé dès le début, alors on constate une plus grande propension à opt-out chez les agents. De plus, les auteurs précise que l’impact est d’autant plus important lorsqu’il s’agit des salaires les plus élevés en entreprise. Ils concluent même en disant que les politiques publiques doivent tirer des leçons de ce travail pour l’avenir. Cette théorie justifie bien qu’il existe une part de population qui sera toujours prête à ne pas suivre une recommandation et que la pertinence d’un politiques publique dépend du carde dans lequel elle est émise, de son intensité et de l’hétérogénéité des agents.
+
+**3. Citations clés (à copier-coller plus tard) :**
+*Repère 1 ou 2 phrases fortes dans la conclusion.*
+
+"If high contribution rates in defined contribution retirement savings plans are socially desirable, aggressive defaults may not be effective. It may be better to automatically enroll employees at a modest contribution rate (e.g., 6%) and automatically increase rates over time."
+
+"Evidence suggests that barriers to active decision-making—such as procrastination or lack of relevant knowledge—play an important role in why low-income employees opt out of defaults more slowly than high-income employees."
+
+**4. Variables/Concepts exploitables :**
+Les barrières à la prise de décision comme la procrastination et le manque d’information jouent un rôle important dans les résultats d’une incitation douce ou d’une politique publique.

@@ -1,145 +1,184 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Aug  2 13:49:30 2022
-
-@author: bchicot
-"""
-from itertools import combinations, permutations, islice
-import random
 import numpy as np
+import matplotlib.pyplot as plt
+
+# =========================================================
+# 1. Fonctions du modèle
+# =========================================================
+
+def phi(n, gamma):
+    return gamma * np.log(1 + n)
+
+def reactance_term(n, theta, T):
+    return theta * np.tanh(n / T)
+
+def threshold(n, theta, gamma, c, T):
+    return c - phi(n, gamma) + reactance_term(n, theta, T)
+
+def simulate_P(n_values, V, theta, gamma, c, T):
+    P_values = []
+    
+    for n in n_values:
+        S = threshold(n, theta, gamma, c, T)
+        adoption = V >= S
+        P_values.append(np.mean(adoption))
+    
+    return np.array(P_values)
+
+# =========================================================
+# 2. Paramètres du modèle
+# =========================================================
+
+N_agents = 20000
+
+gamma = 2.0
+c = 1.5
+T = 1.0
+
+# Motivations V_i ~ normale tronquée à 0
+V = np.random.normal(loc=2.0, scale=0.8, size=N_agents)
+V = np.maximum(V, 0)
+
+# Réactance theta_i ~ Gamma
+theta = np.random.gamma(shape=2.0, scale=1.0, size=N_agents)
+
+# Grille de n
+n_values = np.linspace(0, 10, 200)
+
+# =========================================================
+# 3. Simulation
+# =========================================================
+
+P_values = simulate_P(n_values, V, theta, gamma, c, T)
+
+# =========================================================
+# 4. Graphique
+# =========================================================
+
+plt.figure()
+plt.plot(n_values, P_values)
+plt.xlabel("Intensité du nudge (n)")
+plt.ylabel("Proportion d'adoption P(n)")
+plt.title("Simulation de P(n)")
+plt.show()
+
+#Deux scénarios
+theta_high = np.random.gamma(shape=4.0, scale=1.5, size=N_agents)
+P_high = simulate_P(n_values, V, theta_high, gamma, c, T)
+
+plt.figure()
+plt.plot(n_values, P_values, label="Réactance modérée")
+plt.plot(n_values, P_high, label="Réactance forte")
+plt.legend()
+plt.xlabel("n")
+plt.ylabel("P(n)")
+plt.show()
+
+
+#n optimal
+n_star = n_values[np.argmax(P_values)]
+P_star = np.max(P_values)
+
+print("n optimal =", n_star)
+print("P maximal =", P_star)
+
+#variation T
 import pandas as pd
+T = [0.0,0.5,1.0,1.5,2.0]
 
-dilemme = pd.DataFrame(index = ["denoncer","ne rien dire"], data={"denoncer":[(-3,-3),(-10,0)],"ne rien dire":[(0,-10),(-1,-1)]})
+liste_val = []
 
-##DILEMME DU PRISONNIER
+for val in T:
+    P_values = simulate_P(n_values, V, theta, gamma, c, val)
+    df = pd.DataFrame(P_values)
+    df["T"] = val
+    df["n"] = n_values
+    liste_val.append(df)
 
-class jeu():
-    def __init__(self,nb_joueur,liste_choix = None, matrice = None) :
-        
-        if matrice is None:
-            self.matrice = pd.DataFrame(index=[liste_choix][0],columns=[liste_choix])
-            self.nb_choix = int(len(liste_choix)) 
-            self.liste_choix = liste_choix
-        else:
-            self.matrice = matrice
-            self.nb_choix = int(len(matrice.columns))
-            self.liste_choix = list(matrice.columns)            
- 
-        self.nb_joueur = nb_joueur
-        
-        self.liste_gain = []
-               
-        self.optimum  = []
-        
-        self.df_nash = []
-        # for col in self.matrice.columns:
-        #     try :
-        #         self.a = self.matrice.loc[self.matrice[col] == self.optimum_pareto] 
-        #         self.a = self.a.index[0]
-        #     except:
-        #         pass
+final = pd.concat(liste_val)
+final = final.rename(columns = {0:"val_p"})
 
-    def show_matrice(self, liste_outcome = None):
-        
-        if liste_outcome is not None :
-        
-            longueur = int(len(liste_outcome))
-            for i in range(0,len(liste_outcome)):
-                for i in range(0,self.nb_choix):
-                    gain = [liste_outcome[i],liste_outcome[i]]
-                    self.liste_gain.append(gain)
-    
-                rest = liste_outcome[self.nb_choix:longueur]
-                output=[rest[j:j + self.nb_joueur] for j in range(0, len(rest), self.nb_joueur)]
-                for elt in output:
-                    combi = list(set(permutations(elt,self.nb_joueur)))
-                    for elt in combi:
-                        self.liste_gain.append(list(elt))
-                    
-                self.liste_gain = self.liste_gain[0:len(liste_outcome)]
-    
-                for i in range(len(self.liste_gain)):
-                    for j in range(len(self.matrice.columns)):
-                        print(i,j,self.liste_gain[i])
-                        if i == j and i < len(self.liste_choix):
-                            self.matrice.iloc[j][self.matrice.columns[j]] = self.liste_gain[i]
-                        elif  len(self.liste_gain)-1 > i >= len(self.liste_choix) and i != j:
-                            for k in range(len(self.matrice.index)):
-                                if k != j :
-                                    self.matrice.iloc[k][self.matrice.columns[j]] = self.liste_gain[i]
-                                    self.matrice.iloc[j][self.matrice.columns[k]] = self.liste_gain[i+1]
-                                
-            return(self.matrice)
-        
+import seaborn as sns
+ax = sns.lineplot(data=final, x='n', y='val_p', hue='T', palette='viridis', 
+    linewidth=2.5)
 
-        else :
-            return(self.matrice)
-        
-    def pareto(self):
-        if self.matrice.isnull().any().any():
-            liste_opti = []
-            for i in range(len(self.liste_gain)):
-                somme = sum(self.liste_gain[i])
-                liste_opti.append(somme)
-                
-            optimum_idx = [i for i, j in enumerate(liste_opti) if j == max(liste_opti)]
-            
-            for k in range(len(optimum_idx)) :
-                temp = [self.liste_gain[optimum_idx[k]],liste_opti[optimum_idx[k]]]
-                self.optimum.append(temp)
-     
-            return(self.optimum)
-        
-        else :
-            liste_opti = []
-            for elt in self.matrice.columns:
-                for i in (self.matrice[elt].values):
-            
-                    liste_opti.append([sum(i), i, elt])
-                
-            self.optimum  = max(liste_opti)
-            return(max(liste_opti))
-                
-          
-    def nash(self):
-        if self.matrice.isnull().any().any(): 
-            self.matrice = self.show_matrice()
-            nash_table = self.matrice.copy()
-            for i in range(len(nash_table.index)):
-                for j in nash_table.columns:
-                    nash_table[j][i] = nash_table[j][i][0]
-            for j in nash_table.columns:
-                nash_table[j] = nash_table[j].astype(int)
-                
-            self.df_nash = pd.DataFrame(nash_table.idxmax(axis=1)).reset_index()
-            self.eqs = self.df_nash.groupby(0).nunique()
-        else:
-            nash_table = self.matrice.copy()
-            for i in range(len(nash_table.index)):
-                for j in nash_table.columns:
-                    nash_table[j][i] = nash_table[j][i][0]
-            for j in nash_table.columns:
-                nash_table[j] = nash_table[j].astype(int)
-                
-            self.df_nash = pd.DataFrame(nash_table.idxmax(axis=1)).reset_index()
-            self.eqs = self.df_nash.groupby(0).nunique()
-        
-        if len(self.eqs) == 1:
-            message = "Un seul équilibre possible : "
-            
-        else :
-            message = "Plusieurs équilibres possibles : "
-        
-        return(self.df_nash,message,self.eqs)
+ax.set_title("Réactance en fonction de la valeur de T", fontsize=15, fontweight='bold')
+ax.set_xlabel("n", fontsize=12)
+ax.set_ylabel("P(n)", fontsize=12)
 
-            
-test = jeu(2,matrice = dilemme)                
+plt.tight_layout()
+plt.show()  
 
-liste_choix = [-3,-1,0,-10]
 
-test.show_matrice(liste_outcome = liste_choix)
+########GRAPH 3D
 
-test.nash()
-test.show_matrice()
-test.pareto()
-test.matrice
+import numpy as np
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+# Grilles
+n_values = np.linspace(0, 10, 100)
+T_values = np.linspace(0.2, 3, 50)
+
+N_agents = 20000
+gamma = 2.0
+c = 1.5
+
+# Tirage une seule fois (important pour cohérence)
+V = np.random.normal(loc=2.0, scale=0.8, size=N_agents)
+V = np.maximum(V, 0)
+theta = np.random.gamma(shape=2.0, scale=1.0, size=N_agents)
+
+# Stockage
+P_surface = np.zeros((len(T_values), len(n_values)))
+
+for i, T in enumerate(T_values):
+    for j, n in enumerate(n_values):
+        phi = gamma * np.log(1 + n)
+        S = c - phi + theta * np.tanh(n / T)
+        P_surface[i, j] = np.mean(V >= S)
+
+# Mesh
+N, TT = np.meshgrid(n_values, T_values)
+
+# Plot 3D
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+ax.plot_surface(N, TT, P_surface)
+
+ax.set_xlabel("n")
+ax.set_ylabel("T")
+ax.set_zlabel("P(n,T)")
+plt.show()
+
+
+####HEATMAP
+
+plt.figure()
+plt.imshow(P_surface,
+           extent=[n_values.min(), n_values.max(),
+                   T_values.min(), T_values.max()],
+           aspect='auto',
+           origin='lower')
+
+plt.colorbar(label="P(n,T)")
+plt.xlabel("n")
+plt.ylabel("T")
+plt.title("Heatmap de la proportion d'adoption")
+plt.show()
+
+##HEATMAP n opti
+n_star = []
+
+for i in range(len(T_values)):
+    idx_max = np.argmax(P_surface[i, :])
+    n_star.append(n_values[idx_max])
+
+n_star = np.array(n_star)
+
+plt.figure()
+plt.plot(T_values, n_star)
+plt.xlabel("T")
+plt.ylabel("n* optimal")
+plt.title("Niveau optimal de nudge selon la confiance T")
+plt.show()
+

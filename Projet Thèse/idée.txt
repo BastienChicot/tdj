@@ -1,0 +1,25 @@
+Impact de la réactance des autres sur la réactance d'un agent dans le cadre d'une modélisation en réseau
+
+θi​(t+1)=θi​(t)+λj∑​wij​(aj​(t)−ai​(t))
+modèle dynamique dans lequel un agent non réactant mais influençable peut avoir un seuil qui évolue au contact des autres. Cela s'applique dans un monde en réseau. 
+
+L'idée :
+
+les voisins influencent l'agent ;
+certains agents sont très influents ;
+d'autres très influençables.
+Pourquoi c'est intéressant ?
+
+Parce que ton modèle devient capable d'expliquer :
+
+polarisation ;
+propagation de la défiance ;
+contagion comportementale ;
+chambres d'écho.
+
+Et là on rejoint :
+
+Granovetter ;
+Watts ;
+théorie des réseaux ;
+opinion dynamics.
