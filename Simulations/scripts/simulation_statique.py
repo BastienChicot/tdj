@@ -10,6 +10,7 @@ from scipy.stats import gamma
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pandas as pd
 
 
 ##Force de la politique
@@ -63,115 +64,141 @@ for i in range(1000):
     Vi = truncnorm.rvs(a, b, loc=mean, scale=std)
     theta_i = gamma.rvs(a=2, scale=0.25)
     
-    U = utility(Vi, theta_i, 1, c, Gamma, T)
-    adoption = adopt(Vi, theta_i, 1, c, Gamma, T)
-    
-    liste_agent.append((i, U, adoption))
+    liste_agent.append((i, Vi, theta_i))
     
     i+=1
 
-###Graphiques
-# zip(*...) va créer un groupe pour les 'i', un pour les 'U', et un pour les booléens
-axes_x, axes_y, axes_z = zip(*liste_agent)
+#Pour notre population, on va tester toutes les valeurs de n pour chercher le suil optimal
+#Il nous l'utilité de chaque agent pour connaitre son adoption et 
+#à chaque simulation de n, on enregistre simplement le taux d'adoption
+liste_util = []
+liste_part_adopt = []
 
-# Génération du graphique
-plt.plot(axes_z, axes_x, marker='o', linestyle='-', color='b')
+for val in range(100):
+    
+    nb_adopt = 0
+    
+    c = 1
+    Gamma = 0.5
+    T = 1
+    
+    # Boucle sur tous les agents pour la valeur 'val' en cours
+    for i, Vi, theta_i in liste_agent:
+        utilite = utility(Vi, theta_i, val, c, Gamma, T)
+        liste_util.append((val, i, utilite))  # Retrait de la virgule inutile
+        
+        adoption = adopt(Vi, theta_i, val, c, Gamma, T)
+        
+        if adoption:
+            nb_adopt += 1
 
+    part = nb_adopt / len(liste_agent)
+    liste_part_adopt.append((val, part))
+    
+## graphique
+val_n = [stat[0] for stat in liste_part_adopt]
+val_adopt = [stat[1] for stat in liste_part_adopt]
+
+sns.lineplot(x = val_n, y = val_adopt, color="green")
 # Personnalisation
-plt.title("Évolution de U en fonction de l'index i")
-plt.xlabel("Index (i)")
-plt.ylabel("Valeur de U")
+plt.title("Taux d'adoptant avec une variation de n")
+plt.xlabel("n")
+plt.ylabel("P(n)")
 plt.grid(True)
 
 # Affichage
 plt.show()
 
 
-# On extrait uniquement les valeurs de U (la deuxième colonne)
-valeurs_U = [stat[1] for stat in liste_agent]
+##heatmap
+# 1. On initialise un dictionnaire vide pour stocker les colonnes
+dictionnaire_heat = {}
 
-# Création du graphique de densité
-sns.kdeplot(valeurs_U, fill=True, color="green")
+# Boucle principale (lignes ou colonnes)
+for val in np.arange(0, 10, 0.1):
 
-# Personnalisation
-plt.title("Graphique de densité des valeurs de U")
-plt.xlabel("Valeurs de U")
-plt.ylabel("Densité de probabilité")
-plt.grid(True)
+    # Pour chaque 'val', on va stocker les résultats de tous les 't'
+    liste_pour_cette_val = []
 
-# Affichage
+    for t in np.arange(0,50,0.5):
+
+        nb_adopt = 0
+
+        for i, Vi, theta_i in liste_agent:
+            # OPTIMISATION : Remplacement du paramètre fixe T par la variable de boucle t
+            # utilite = utility(Vi, theta_i, val, c, Gamma, t) # Si utile plus tard
+            
+            # Utilisation de l'astuce : True vaut 1, False vaut 0
+            nb_adopt += adopt(Vi, theta_i, val + 1, c, Gamma, t + 1)
+
+        part = nb_adopt / len(liste_agent)
+        
+        # On ajoute juste la valeur finale de 'part' dans l'ordre chronologique des 't'
+        liste_pour_cette_val.append(part)
+
+    # On associe la liste de résultats à la colonne 'val' correspondante
+    dictionnaire_heat[val] = liste_pour_cette_val
+
+# 2. Création du DataFrame en un seul bloc
+# Les index (lignes) seront automatiquement de 0 à 499 (représentant 't')
+# Les colonnes seront de 0 à 499 (représentant 'val')
+data_heat = pd.DataFrame(dictionnaire_heat)
+
+# 3. Affichage de la Heatmap
+plt.figure(figsize=(12, 10))
+sns.heatmap(data_heat, cmap="viridis", xticklabels=50, yticklabels=50)
+
+plt.title("Heatmap du taux d'adoption")
+plt.xlabel("Valeur de n (variable val)")
+plt.ylabel("Valeur de T (variable t)")
 plt.show()
     
+        
+#Test sur gamma
+liste_util = []
+liste_part_adopt = []
+gamma_values = [0.05, 0.1, 0.25, 0.5, 1]
 
-###Histogramme
-from collections import Counter
+for valeur in gamma_values :
 
-# On sépare vos données comme vous l'avez fait
-axes_x, axes_y, axes_z = zip(*liste_agent)
-
-# 1. On compte automatiquement le nombre de True et de False
-comptage = Counter(axes_z)
-
-# 2. On sépare les étiquettes (True/False) et leurs volumes (les valeurs)
-categories = list(comptage.keys())  # Contient [False, True] (ou inversement)
-volumes = list(comptage.values())  # Contient le nombre de chaque
-
-# Génération du graphique en barres (plt.bar au lieu de plt.plot)
-# On peut même donner des couleurs différentes : rouge pour False, vert pour True
-couleurs = ['green' if cat else 'red' for cat in categories]
-plt.bar(categories, volumes, color=couleurs, width=0.4)
-
-# Personnalisation
-plt.title("Volume des états (True / False)")
-plt.xlabel("État (axes_z)")
-plt.ylabel("Volume (Nombre d'agents)")
-
-# On force l'affichage de "True" et "False" proprement sur l'axe X
-plt.xticks(categories, [str(cat) for cat in categories])
-
-plt.grid(axis='y', linestyle='--', alpha=0.7)  # Grille uniquement horizontale
-
-# Affichage
-plt.show()
-
-##Boucle en faisant varier n sur un agent
-liste_n=[]
-
-for n in range(200):
-    Vi = truncnorm.rvs(a, b, loc=mean, scale=std)
-    theta_i = gamma.rvs(a=2, scale=0.25)
+    nb_adopt = 0
     
-    U = utility(Vi, theta_i, n, c, Gamma, T)
-    adoption = adopt(Vi, theta_i, n, c, Gamma, T)
+    c = 1
+    T = 5
     
-    liste_n.append((n, U, adoption))
-    
-    n+=1
+    liste_agent = []
+    for i in range(1000):
+        Vi = truncnorm.rvs(a, b, loc=mean, scale=std)
+        theta_i = gamma.rvs(a=2, scale=valeur)
+        
+        liste_agent.append((i, Vi, theta_i))
+        
+        i+=1         
+        
+    for val in np.arange(0, 10, 0.1):
+        # Boucle sur tous les agents pour la valeur 'val' en cours
+        for i, Vi, theta_i in liste_agent:
+            utilite = utility(Vi, theta_i, val, c, valeur, T)
+            liste_util.append((val, i, utilite))  # Retrait de la virgule inutile
+            
+            adoption = adopt(Vi, theta_i, val, c, valeur, T)
+            
+            if adoption:
+                nb_adopt += 1
+        
+        part = nb_adopt / len(liste_agent)
+        liste_part_adopt.append((valeur, val, part))
+        
+## graphique
+val_g = [stat[0] for stat in liste_part_adopt]
+val_n = [stat[1] for stat in liste_part_adopt]
+val_adopt = [stat[2] for stat in liste_part_adopt]
 
-valeurs_U = [stat[1] for stat in liste_n]
-
-# Création du graphique de densité
-sns.kdeplot(valeurs_U, fill=True, color="green")
-
+sns.lineplot(x = val_n, y = val_adopt, hue=val_g)
 # Personnalisation
-plt.title("Graphique de densité des valeurs de U")
-plt.xlabel("Valeurs de U")
-plt.ylabel("Densité de probabilité")
-plt.grid(True)
-
-# Affichage
-plt.show()
-
-# zip(*...) va créer un groupe pour les 'i', un pour les 'U', et un pour les booléens
-axes_x, axes_y, axes_z = zip(*liste_n)
-
-# Génération du graphique
-plt.plot(axes_x, axes_y, marker='o', linestyle='-', color='b')
-
-# Personnalisation
-plt.title("Évolution de U en fonction de l'index i")
-plt.xlabel("Index (i)")
-plt.ylabel("Valeur de U")
+plt.title("Taux d'adoptant avec une variation de n")
+plt.xlabel("n")
+plt.ylabel("P(n)")
 plt.grid(True)
 
 # Affichage
