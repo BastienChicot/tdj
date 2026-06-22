@@ -5,6 +5,44 @@ import matplotlib.pyplot as plt
 
 from model import simulate, generate_population
 
+def check_password():
+
+    def password_entered():
+
+        if st.session_state["password"] == st.secrets["password"]:
+            st.session_state["authenticated"] = True
+        else:
+            st.session_state["authenticated"] = False
+
+
+    if "authenticated" not in st.session_state:
+        st.text_input(
+            "Mot de passe",
+            type="password",
+            on_change=password_entered,
+            key="password"
+        )
+
+        return False
+
+    elif st.session_state["authenticated"]:
+        return True
+
+    else:
+        st.text_input(
+            "Mot de passe",
+            type="password",
+            on_change=password_entered,
+            key="password"
+        )
+
+        st.error("Mot de passe incorrect")
+        return False
+
+
+
+if not check_password():
+    st.stop()
 
 # ------------------
 # Configuration
