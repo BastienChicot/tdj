@@ -129,3 +129,32 @@ def simulate_population(
         theta_shape,
         theta_scale
     )
+
+def generate_population(
+    N,
+    V_mean,
+    V_std,
+    theta_shape,
+    theta_scale
+):
+
+    a = (-np.inf - V_mean) / V_std
+    b = (np.inf - V_mean) / V_std
+
+    Vi_agents = truncnorm.rvs(
+        a,
+        b,
+        loc=V_mean,
+        scale=V_std,
+        size=N
+    )
+
+    theta_agents = gamma.rvs(
+        a=theta_shape,
+        scale=theta_scale,
+        size=N
+    )
+
+    return Vi_agents, theta_agents
+
+

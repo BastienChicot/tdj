@@ -1,0 +1,18 @@
+# Simulation du modèle de réactance
+
+Cette application permet d'explorer le modèle d'adoption d'une politique publique intégrant :
+
+- motivation intrinsèque
+- efficacité du nudge
+- réactance psychologique
+- confiance institutionnelle
+
+L'application permet de faire varier :
+- intensité du nudge
+- distribution de motivation
+- distribution de réactance
+- confiance institutionnelle
+
+## Lancement local
+
+streamlit run app.py
