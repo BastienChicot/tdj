@@ -47,14 +47,22 @@ if not check_password():
 # ------------------
 # Configuration
 # ------------------
+st.title("Modèle d'adoption des politiques publiques")
 
+st.write(
+"""
+Prototype de simulation intégrant :
+- hétérogénéité des motivations individuelles ;
+- réactance comportementale ;
+- confiance institutionnelle.
+"""
+)
+    
 st.set_page_config(
     page_title="Reactance Model",
     layout="wide"
 )
 
-
-st.title("Simulation d'adoption d'une politique publique")
 st.write(
 """
 Modèle d'adoption intégrant :
