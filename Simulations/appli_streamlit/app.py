@@ -189,7 +189,7 @@ df = pd.DataFrame(results)
 st.subheader("Evolution de l'adoption")
 
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(6,3))
 
 ax.plot(
     df["n"],
@@ -216,7 +216,7 @@ with col1:
 
     st.subheader("Effet matériel")
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(4,3))
 
     ax.plot(
         df["n"],
@@ -236,7 +236,7 @@ with col2:
 
     st.subheader("Réactance moyenne")
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(4,3))
 
     ax.plot(
         df["n"],
@@ -268,7 +268,7 @@ Vi, theta = generate_population(
 )
 
 
-fig, ax = plt.subplots()
+fig, ax = plt.subplots(figsize=(6,3))
 
 ax.scatter(
     Vi,
