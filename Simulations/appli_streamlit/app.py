@@ -217,7 +217,7 @@ results = simulate(
 
 
 df = pd.DataFrame(results)
-st.write(df.head())
+# st.write(df.head())
 
 # ------------------
 # Graphique adoption
