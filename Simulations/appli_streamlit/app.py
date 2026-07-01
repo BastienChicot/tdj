@@ -257,17 +257,14 @@ with col1:
 
     ax.plot(
         df["n"],
-        df["phi"],
-        marker="."
+        df["phi"]
     )
 
     ax.set_xlabel("n")
     ax.set_ylabel("phi(n)")
 
     ax.grid(True)
-    
-    ax.set_ylim(bottom=0)
-    
+
     st.pyplot(fig)
 
 
