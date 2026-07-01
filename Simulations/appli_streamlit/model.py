@@ -37,41 +37,16 @@ def utility(Vi, theta_i, n, c, gamma_phi, T, alpha):
 # ------------------------
 
 def simulate(
-    N,
+    Vi_agents,
+    theta_agents,
     n_values,
     c,
     gamma_phi,
     T,
-    alpha,
-    V_mean,
-    V_std,
-    theta_shape,
-    theta_scale
+    alpha
 ):
 
     results = []
-
-    # paramètres normale tronquée
-    a = (-np.inf - V_mean) / V_std
-    b = (np.inf - V_mean) / V_std
-
-
-    # création agents
-
-    Vi_agents = truncnorm.rvs(
-        a,
-        b,
-        loc=V_mean,
-        scale=V_std,
-        size=N
-    )
-
-
-    theta_agents = gamma.rvs(
-        a=theta_shape,
-        scale=theta_scale,
-        size=N
-    )
 
 
     # boucle sur intensité du nudge
@@ -88,15 +63,22 @@ def simulate(
             alpha
         )
 
+
         adoption = np.mean(utilities > 0)
+
 
         results.append(
             {
-            "n":n,
-            "adoption":adoption,
-            "phi":phi(n,gamma_phi),
-            "reactance":np.mean(
-                reactance(n,theta_agents,T,alpha)
+            "n": n,
+            "adoption": adoption,
+            "phi": phi(n, gamma_phi),
+            "reactance": np.mean(
+                reactance(
+                    n,
+                    theta_agents,
+                    T,
+                    alpha
+                )
             )
             }
         )

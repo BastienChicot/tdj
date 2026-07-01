@@ -5,6 +5,11 @@ import matplotlib.pyplot as plt
 
 from model import simulate, generate_population
 
+st.set_page_config(
+    page_title="Reactance Model",
+    layout="wide"
+)
+
 def check_password():
 
     def password_entered():
@@ -56,11 +61,6 @@ Prototype de simulation intégrant :
 - réactance comportementale ;
 - confiance institutionnelle.
 """
-)
-    
-st.set_page_config(
-    page_title="Reactance Model",
-    layout="wide"
 )
 
 st.write(
@@ -159,6 +159,19 @@ alpha = st.sidebar.slider(
 
 
 # ------------------
+# Population
+# ------------------
+
+Vi_agents, theta_agents = generate_population(
+    N,
+    V_mean,
+    V_std,
+    theta_shape,
+    theta_scale
+)
+
+
+# ------------------
 # Simulation
 # ------------------
 
@@ -166,16 +179,13 @@ n_values = np.linspace(0,10,100)
 
 
 results = simulate(
-    N,
+    Vi_agents,
+    theta_agents,
     n_values,
     c,
     gamma_phi,
     T,
-    alpha,
-    V_mean,
-    V_std,
-    theta_shape,
-    theta_scale
+    alpha
 )
 
 
@@ -259,20 +269,11 @@ with col2:
 st.subheader("Population simulée")
 
 
-Vi, theta = generate_population(
-    N,
-    V_mean,
-    V_std,
-    theta_shape,
-    theta_scale
-)
-
-
 fig, ax = plt.subplots(figsize=(6,3))
 
 ax.scatter(
-    Vi,
-    theta,
+    Vi_agents,
+    theta_agents,
     alpha=0.3
 )
 
