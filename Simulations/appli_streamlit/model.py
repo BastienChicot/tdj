@@ -4,22 +4,16 @@ import numpy as np
 from scipy.stats import truncnorm, gamma
 
 
-# ------------------------
-# Fonctions du modèle
-# ------------------------
-
 def phi(n, gamma_phi):
-    """
-    Effet matériel du nudge
-    """
+
     return gamma_phi * np.log(1+n)
 
 
+
 def reactance(n, theta_i, T, alpha):
-    """
-    Coût psychologique lié à la réactance
-    """
+
     return theta_i * (n/T)**alpha
+
 
 
 def utility(Vi, theta_i, n, c, gamma_phi, T, alpha):
@@ -32,9 +26,6 @@ def utility(Vi, theta_i, n, c, gamma_phi, T, alpha):
     )
 
 
-# ------------------------
-# Simulation population
-# ------------------------
 
 def simulate(
     Vi_agents,
@@ -49,9 +40,8 @@ def simulate(
     results = []
 
 
-    # boucle sur intensité du nudge
-
     for n in n_values:
+
 
         utilities = utility(
             Vi_agents,
@@ -69,48 +59,24 @@ def simulate(
 
         results.append(
             {
-            "n": n,
-            "adoption": adoption,
-            "phi": phi(n, gamma_phi),
-            "reactance": np.mean(
-                reactance(
-                    n,
-                    theta_agents,
-                    T,
-                    alpha
+                "n": n,
+                "adoption": adoption,
+                "phi": phi(n, gamma_phi),
+                "reactance": np.mean(
+                    reactance(
+                        n,
+                        theta_agents,
+                        T,
+                        alpha
+                    )
                 )
-            )
             }
         )
 
 
     return results
 
-def simulate_population(
-    N,
-    n_values,
-    c,
-    gamma_phi,
-    T,
-    alpha,
-    V_mean,
-    V_std,
-    theta_shape,
-    theta_scale
-):
 
-    return simulate(
-        N,
-        n_values,
-        c,
-        gamma_phi,
-        T,
-        alpha,
-        V_mean,
-        V_std,
-        theta_shape,
-        theta_scale
-    )
 
 def generate_population(
     N,
@@ -123,6 +89,7 @@ def generate_population(
     a = (-np.inf - V_mean) / V_std
     b = (np.inf - V_mean) / V_std
 
+
     Vi_agents = truncnorm.rvs(
         a,
         b,
@@ -131,12 +98,12 @@ def generate_population(
         size=N
     )
 
+
     theta_agents = gamma.rvs(
         a=theta_shape,
         scale=theta_scale,
         size=N
     )
 
+
     return Vi_agents, theta_agents
-
-
