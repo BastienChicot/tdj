@@ -156,26 +156,53 @@ alpha = st.sidebar.slider(
     1.5
 )
 
-
-
 # ------------------
-# Population
+# Population persistante
 # ------------------
 
-Vi_agents, theta_agents = generate_population(
-    N,
-    V_mean,
-    V_std,
-    theta_shape,
-    theta_scale
-)
+if (
+    "Vi_agents" not in st.session_state
+    or "theta_agents" not in st.session_state
+    or st.session_state["population_params"] != (
+        N,
+        V_mean,
+        V_std,
+        theta_shape,
+        theta_scale
+    )
+):
 
+    Vi_agents, theta_agents = generate_population(
+        N,
+        V_mean,
+        V_std,
+        theta_shape,
+        theta_scale
+    )
+
+
+    st.session_state["Vi_agents"] = Vi_agents
+    st.session_state["theta_agents"] = theta_agents
+
+    st.session_state["population_params"] = (
+        N,
+        V_mean,
+        V_std,
+        theta_shape,
+        theta_scale
+    )
+
+
+else:
+
+    Vi_agents = st.session_state["Vi_agents"]
+    theta_agents = st.session_state["theta_agents"]
 
 # ------------------
 # Simulation
 # ------------------
 
-n_values = np.linspace(0,10,100)
+n_values = np.linspace(0,50,200)
 
 
 results = simulate(
@@ -190,7 +217,7 @@ results = simulate(
 
 
 df = pd.DataFrame(results)
-
+st.write(df.head())
 
 # ------------------
 # Graphique adoption
@@ -230,14 +257,17 @@ with col1:
 
     ax.plot(
         df["n"],
-        df["phi"]
+        df["phi"],
+        marker="."
     )
 
     ax.set_xlabel("n")
     ax.set_ylabel("phi(n)")
 
     ax.grid(True)
-
+    
+    ax.set_ylim(bottom=0)
+    
     st.pyplot(fig)
 
 
@@ -259,7 +289,6 @@ with col2:
     ax.grid(True)
 
     st.pyplot(fig)
-
 
 
 # ------------------
