@@ -46,8 +46,8 @@ def check_password():
 
 
 
-if not check_password():
-    st.stop()
+# if not check_password():
+#     st.stop()
 
 # ------------------
 # Configuration
@@ -120,7 +120,28 @@ theta_scale = st.sidebar.slider(
     0.25
 )
 
+st.sidebar.subheader("Sensibilité à la campagne")
 
+delta_V = st.sidebar.slider(
+    "Gain maximal ΔV",
+    0.0,
+    5.0,
+    1.0
+)
+
+beta_shape = st.sidebar.slider(
+    "β shape",
+    0.1,
+    10.0,
+    2.0
+)
+
+beta_scale = st.sidebar.slider(
+    "β scale",
+    0.01,
+    2.0,
+    0.30
+)
 
 st.sidebar.header("Politique publique")
 
@@ -168,28 +189,35 @@ if (
         V_mean,
         V_std,
         theta_shape,
-        theta_scale
+        theta_scale,
+        beta_shape,
+        beta_scale
     )
 ):
 
-    Vi_agents, theta_agents = generate_population(
+    Vi_agents, theta_agents, beta_agents = generate_population(
         N,
         V_mean,
         V_std,
         theta_shape,
-        theta_scale
+        theta_scale,
+        beta_shape,
+        beta_scale
     )
 
 
     st.session_state["Vi_agents"] = Vi_agents
     st.session_state["theta_agents"] = theta_agents
+    st.session_state["beta_agents"] = beta_agents
 
     st.session_state["population_params"] = (
         N,
         V_mean,
         V_std,
         theta_shape,
-        theta_scale
+        theta_scale,
+        beta_shape,
+        beta_scale
     )
 
 
@@ -197,6 +225,7 @@ else:
 
     Vi_agents = st.session_state["Vi_agents"]
     theta_agents = st.session_state["theta_agents"]
+    beta_agents = st.session_state["beta_agents"]
 
 # ------------------
 # Simulation
@@ -208,11 +237,13 @@ n_values = np.linspace(0,50,200)
 results = simulate(
     Vi_agents,
     theta_agents,
+    beta_agents,
     n_values,
     c,
     gamma_phi,
     T,
-    alpha
+    alpha,
+    delta_V
 )
 
 
@@ -240,7 +271,21 @@ ax.grid(True)
 
 st.pyplot(fig)
 
+st.subheader("Motivation moyenne")
 
+fig, ax = plt.subplots(figsize=(6,3))
+
+ax.plot(
+    df["n"],
+    df["motivation"]
+)
+
+ax.set_xlabel("Intensité du nudge")
+ax.set_ylabel("Motivation moyenne")
+
+ax.grid(True)
+
+st.pyplot(fig)
 
 # ------------------
 # Effets internes
