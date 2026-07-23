@@ -6,3 +6,9 @@ International :
 UK == Behavioural Insights Team
 USA et inter ==J-PAL
 euro == OCDE
+
+Réponse mail PPC : 
+- T ok entre 0 et 1
+- n devient une variable qui représente l'intensité "perçue" par les agents de la politique publique. elle serait calibrée grâce au évaluation réelles sur le terrain
+
+Simplification de l'équation avec Vi(n) au lieu de l'expression entière ++ détails des paramètres de Vi et Têta i
