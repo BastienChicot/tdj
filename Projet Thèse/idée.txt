@@ -12,3 +12,6 @@ Réponse mail PPC :
 - n devient une variable qui représente l'intensité "perçue" par les agents de la politique publique. elle serait calibrée grâce au évaluation réelles sur le terrain
 
 Simplification de l'équation avec Vi(n) au lieu de l'expression entière ++ détails des paramètres de Vi et Têta i
+
+Pas mal d'articles sur les avancées de la théorie mentionnent le lien entre réactance et motivation. Si la réactance influence la motivation, est-ce que mon équation tient toujours la route?
+
