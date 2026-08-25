@@ -15,3 +15,27 @@ Simplification de l'équation avec Vi(n) au lieu de l'expression entière ++ dé
 
 Pas mal d'articles sur les avancées de la théorie mentionnent le lien entre réactance et motivation. Si la réactance influence la motivation, est-ce que mon équation tient toujours la route?
 
+Feuille de route
+
+Semaine / prochaines séances
+
+Chantier A — Projet de thèse
+→ terminer une V1.5 cohérente
+→ envoyer au chercheur
+→ attendre son retour
+
+Chantier B — Données
+→ nettoyer ton inventaire SPF
+→ ne pas chercher la perfection
+→ identifier les variables effectivement disponibles
+
+Chantier C — CEVIPOF
+→ comprendre ton indicateur de confiance
+→ le mettre au propre
+→ regarder son évolution temporelle
+
+Chantier D — Modèle / Streamlit
+→ vérifier que l'application correspond exactement à la dernière équation
+→ ajouter éventuellement des sorties utiles : seuil individuel, distribution des adoptants, P(n), optimum
+→ ne pas encore chercher à calibrer
+
